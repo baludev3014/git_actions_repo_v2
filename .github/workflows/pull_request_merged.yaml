@@ -1,0 +1,50 @@
+name: CI/CD pipeline with pull_request merged.
+
+on:
+
+  pull_request:
+
+    branches:
+      - main
+      
+    types:
+      - closed
+
+jobs:
+
+  run_if_merged:
+
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Pull Request Merged"
+  
+  log:
+
+    needs: 
+      - run_if_merged
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout git repo
+        uses: actions/checkout@v5
+      
+      - name: Installing node
+        run: |
+          sudo apt update -y
+
+          sudo apt install nodejs npm -y
+
+          sudo apt update -y
+
+      - name: running start script
+        run: npm run start
+
+
+
+    
+
+
+

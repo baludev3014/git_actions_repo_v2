@@ -1,0 +1,49 @@
+name: CI/CD pipeline with pull_request approved.
+
+on:
+
+  pull_request:
+  
+    types:
+      - submitted
+    branches:
+      - main
+
+jobs:
+
+  run_if_approved:
+
+    if: ${{ github.event.review.state == "approved" }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Pull Request Approved."
+  
+  log:
+
+    needs: 
+      - run_if_approved
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout git repo
+        uses: actions/checkout@v5
+      
+      - name: Installing node
+        run: |
+          sudo apt update -y
+
+          sudo apt install nodejs npm -y
+
+          sudo apt update -y
+
+      - name: running start script
+        run: npm run start
+
+
+
+    
+
+
+
