@@ -13,7 +13,7 @@ jobs:
 
   run_if_approved:
 
-    if: ${{ github.event.review.state == approved }}
+    if: ${{ github.event.review.state == 'approved' }}
     runs-on: ubuntu-latest
 
     steps:
